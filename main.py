@@ -29,25 +29,30 @@ def correct_name_year(now_age: int) -> str:
     return 'лет'
 
 
-actual_year = datetime.now().year
-now_age = actual_year - 1920
+def main():
+    actual_year = datetime.now().year
+    now_age = actual_year - 1920
 
-env = Environment(
-    loader=FileSystemLoader('.'),
-    autoescape=select_autoescape(['html'])
-    )
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html'])
+        )
 
-template = env.get_template('template.html')
+    template = env.get_template('template.html')
 
-rendered_page = template.render(
-    now_age=now_age,
-    name_year=correct_name_year(now_age),
-    wine=get_drinks()[1],
-    category_drinks=get_drinks()[0]
-    )
+    rendered_page = template.render(
+        now_age=now_age,
+        name_year=correct_name_year(now_age),
+        wine=get_drinks()[1],
+        category_drinks=get_drinks()[0]
+        )
 
-with open('index.html', 'w', encoding='utf-8') as file:
-    file.write(rendered_page)
+    with open('index.html', 'w', encoding='utf-8') as file:
+        file.write(rendered_page)
 
-server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
-server.serve_forever()
+    server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
+    server.serve_forever()
+
+
+if __name__ == '__main__':
+    main()
