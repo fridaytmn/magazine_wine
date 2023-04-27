@@ -5,19 +5,6 @@ from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-def get_drinks():
-    result_wines = defaultdict(list)
-    excel_data_df = pd.read_excel('wine3.xlsx',
-                                  na_values=None,
-                                  keep_default_na=False
-                                  )
-    wines = excel_data_df.to_dict(orient='records')
-    for wine in wines:
-        result_wines[wine['Категория']].append(wine)
-    category_drinks = sorted(list(result_wines.keys()))
-    return [category_drinks, result_wines]
-
-
 def correct_name_year(now_age: int) -> str:
     now_age = now_age % 100
     if now_age < 21 and now_age > 4:
@@ -30,6 +17,7 @@ def correct_name_year(now_age: int) -> str:
 
 
 def main():
+    path_to_file = input()
     actual_year = datetime.now().year
     now_age = actual_year - 1920
 
@@ -43,8 +31,8 @@ def main():
     rendered_page = template.render(
         now_age=now_age,
         name_year=correct_name_year(now_age),
-        wine=get_drinks()[1],
-        category_drinks=get_drinks()[0]
+        wine=get_drinks(path_to_file)[1],
+        category_drinks=get_drinks(path_to_file)[0]
         )
 
     with open('index.html', 'w', encoding='utf-8') as file:
@@ -52,6 +40,19 @@ def main():
 
     server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
+
+    
+def get_drinks(path_to_file):
+    result_wines = defaultdict(list)
+    excel_data_df = pd.read_excel(path_to_file,
+                                  na_values=None,
+                                  keep_default_na=False
+                                  )
+    wines = excel_data_df.to_dict(orient='records')
+    for wine in wines:
+        result_wines[wine['Категория']].append(wine)
+    category_drinks = sorted(list(result_wines.keys()))
+    return [category_drinks, result_wines]
 
 
 if __name__ == '__main__':
