@@ -42,7 +42,7 @@ def main():
     server.serve_forever()
 
     
-def get_drinks(path_to_file):
+def get_drinks(path_to_file:str) -> list:
     result_wines = defaultdict(list)
     excel_data_df = pd.read_excel(path_to_file,
                                   na_values=None,
