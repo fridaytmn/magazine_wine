@@ -17,7 +17,11 @@ def correct_name_year(now_age: int) -> str:
 
 
 def main():
-    path_to_file = input()
+    parser = argparse.ArgumentParser(
+        description='Создает сайт винного магазина с товарами из Excel файла')
+    parser.add_argument('-f', '--file', help='Путь к вашему файлу')
+    args = parser.parse_args()
+    path_to_file = args.file
     actual_year = datetime.now().year
     now_age = actual_year - 1920
 
