@@ -23,8 +23,9 @@
 где path это путь в папку с проектом например `C:\python\`
 
 и затем выполнить команду <br>
-
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 ## Запуск
 
