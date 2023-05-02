@@ -20,7 +20,7 @@ def correct_name_year(now_age: int) -> str:
 def main():
     parser = argparse.ArgumentParser(
         description='Создает сайт винного магазина с товарами из Excel файла')
-    parser.add_argument('-f', '--file', help='Путь к вашему файлу')
+    parser.add_argument('-f', '--file', help='Путь к вашему файлу', default='wine3.xlsx')
     args = parser.parse_args()
     path_to_file = args.file
     actual_year = datetime.now().year
